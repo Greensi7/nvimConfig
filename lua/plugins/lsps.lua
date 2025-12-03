@@ -1,7 +1,7 @@
 return {
     {
         "neovim/nvim-lspconfig",
-        ft = { "lua", "go", "gomod", "gowork", "gotmpl", "c", "cpp", "objc", "objcpp" },
+        ft = { "lua", "go", "gomod", "gowork", "gotmpl", "c", "cpp", "objc", "objcpp", "python" },
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             {
@@ -16,29 +16,42 @@ return {
         },
         opts = {
             servers = {
-                lua_ls = {
-                    -- your lua config here (empty means default)
-                },
+                lua_ls = {},
                 gopls = {
                     cmd = { "gopls" },
                     settings = {
                         gopls = {
-                            analyses = {
-                                unusedparams = true,
-                            },
+                            analyses = { unusedparams = true },
                             staticcheck = true,
                         },
                     },
                 },
                 clangd = {
-                    -- your clangd config here (empty means default)
+                    cmd = { "clangd", "--query-driver=/opt/homebrew/bin/arm-none-eabi-*" },
+                },
+                basedpyright = { 
+                    cmd = { "basedpyright-langserver", "--stdio" },
+                    settings = {
+                        python = {
+                            pythonPath = "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+                        },
+                        basedpyright = {
+                            analysis = {
+                                autoSearchPaths = true,
+                                useLibraryCodeForTypes = true,
+                                diagnosticMode = "openFilesOnly",
+                            },
+                        },
+                    },
                 },
             },
         },
         config = function(_, opts)
-            local lspconfig = require("lspconfig")
             for server, server_opts in pairs(opts.servers or {}) do
-                lspconfig[server].setup(server_opts)
+                vim.lsp.enable(server)
+                if server then
+                    vim.lsp.config(server, server_opts)
+                end
             end
         end,
     },
