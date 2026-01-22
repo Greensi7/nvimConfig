@@ -29,7 +29,7 @@ return {
                 clangd = {
                     cmd = { "clangd", "--query-driver=/opt/homebrew/bin/arm-none-eabi-*" },
                 },
-                basedpyright = { 
+                basedpyright = {
                     cmd = { "basedpyright-langserver", "--stdio" },
                     settings = {
                         python = {

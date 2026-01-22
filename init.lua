@@ -10,16 +10,22 @@ vim.opt.number = true
 vim.opt.cursorline = true
 vim.opt.scl = "yes"
 vim.lsp.enable("basedpyright")
+vim.g.mapleader = " "
+
 
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>ff', function()
+    builtin.find_files({ hidden = false })
+end, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
-vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fm', builtin.man_pages, { desc = 'Telescope man pages' })
 vim.keymap.set('n', '<leader><leader>', '<cmd>b#<CR>', { desc = "Mvoe to the previous buffer" })
 vim.keymap.set('n', "<leader>bf", vim.lsp.buf.format, { desc = "Format Buffer" })
 vim.opt.winborder = 'rounded'
 
+vim.keymap.set("n", "<leader>fb", function()
+    vim.lsp.buf.format({ async = true })
+end, { desc = "Format buffer" })
 
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '<leader>;', ':nohlsearch<CR>', { noremap = true, silent = true })
