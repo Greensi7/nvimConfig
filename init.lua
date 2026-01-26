@@ -44,12 +44,12 @@ vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)     -- find references
 vim.keymap.set("n", "grn", vim.lsp.buf.rename, opts)
 vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts) -- go to implementation
 
-vim.keymap.set("n", "<leader>E", vim.diagnostic.open_float, { desc = "Show diagnostic message" })
-vim.keymap.set("n", "<leader>e", vim.diagnostic.setloclist, { desc = "Show list of errors" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic message" })
+vim.keymap.set("n", "<leader>E", vim.diagnostic.setloclist, { desc = "Show list of errors" })
 
 
 
-vim.keymap.set("n", "<leader>n", function()
+vim.keymap.set("n", "<leader>tf", function()
     local actions = require("telescope.actions")
     local action_state = require("telescope.actions.state")
     local pickers = require("telescope.pickers")
@@ -100,7 +100,7 @@ vim.keymap.set("n", "<leader>n", function()
 end, { desc = "Create new file in selected folder" })
 
 
-vim.keymap.set("n", "<leader>d", function()
+vim.keymap.set("n", "<leader>rm", function()
     local old_path = vim.api.nvim_buf_get_name(0)
     if old_path == "" then
         print("Buffer has no file to delete.")
@@ -116,7 +116,7 @@ vim.keymap.set("n", "<leader>d", function()
     vim.cmd("!rm " .. old_path)
 end, { desc = "Delete current file and move to empty buffer." })
 
-vim.keymap.set("n", "<leader>r", function()
+vim.keymap.set("n", "<leader>rn", function()
     local old_path = vim.api.nvim_buf_get_name(0)
     if old_path == "" then
         print("Buffer has no file to rename.")
