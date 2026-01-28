@@ -5,6 +5,7 @@ return {
 		defaults = {
 			file_ignore_patterns = {
 				"^.git/",
+				"__pycache__",
 			},
 		},
 		pickers = {

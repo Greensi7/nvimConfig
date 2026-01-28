@@ -22,7 +22,19 @@ return {
 			lua = { "stylua", lsp_format = "fallback" },
 			python = { "isort", "black", lsp_format = "fallback" },
 			rust = { "rustfmt", lsp_format = "fallback" },
-			json = { "deno_fmt" },
+			json = { "jsonf" },
+		},
+		formatters = {
+			jsonf = {
+				command = "deno",
+				args = {
+					"fmt",
+					"--indent-width",
+					"4",
+					"$FILENAME",
+				},
+				stdin = false,
+			},
 		},
 		-- Set default options
 		default_format_opts = {

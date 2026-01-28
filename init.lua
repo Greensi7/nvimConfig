@@ -51,6 +51,12 @@ vim.keymap.set("n", "<leader>tf", function()
 	local cwd = vim.loop.cwd()
 	local folders = {}
 
+	local ignored_dirs = {
+		[".git"] = true,
+		["__pycache__"] = true,
+		["node_modules"] = true,
+	}
+
 	table.insert(folders, cwd)
 
 	local function scan_dir(dir)
@@ -61,7 +67,8 @@ vim.keymap.set("n", "<leader>tf", function()
 				if not name then
 					break
 				end
-				if type == "directory" then
+
+				if type == "directory" and not ignored_dirs[name] then
 					local full_path = Path:new(dir, name):absolute()
 					table.insert(folders, full_path)
 					scan_dir(full_path)
@@ -85,7 +92,7 @@ vim.keymap.set("n", "<leader>tf", function()
 					vim.ui.input({ prompt = "New file name: " }, function(input)
 						if input and input ~= "" then
 							local file = folder .. "/" .. input
-							vim.cmd("e " .. vim.fn.fnameescape(file))
+							vim.cmd("edit " .. vim.fn.fnameescape(file))
 						end
 					end)
 				end)
