@@ -140,42 +140,31 @@ vim.keymap.set("n", "<leader>rn", function()
 		return
 	end
 
-	-- Get directory and current filename for the prompt
 	local dir = vim.fn.fnamemodify(old_path, ":h")
 	local filename = vim.fn.fnamemodify(old_path, ":t")
 
 	vim.ui.input({
 		prompt = "New file name: ",
-		default = filename, -- Pre-fill with current name for easier editing
+		default = filename,
 	}, function(input)
-		-- Check if input is valid and actually changed
 		if not input or input == "" or input == filename then
 			return
 		end
 
 		local new_path = dir .. "/" .. input
-
-		-- Check if destination already exists to prevent accidental overwrites
 		if vim.fn.filereadable(new_path) == 1 then
 			vim.notify("File already exists: " .. new_path, vim.log.levels.ERROR)
 			return
 		end
-
-		-- 1. Save the current buffer to ensure changes aren't lost
 		vim.cmd("silent! w")
-
-		-- 2. Rename the file on the Operating System level (Lua native)
 		local success, err = os.rename(old_path, new_path)
 		if not success then
 			vim.notify("Rename failed: " .. err, vim.log.levels.ERROR)
 			return
 		end
 
-		-- 3. Update the Neovim buffer name to match the new file
-		-- This is the magic part: it keeps your undo history intact!
 		vim.api.nvim_buf_set_name(buf, new_path)
 
-		-- 4. Reload the file to refresh LSP/Treesitter/git-signs
 		vim.cmd("edit!")
 
 		vim.notify("Renamed to: " .. input, vim.log.levels.INFO)
