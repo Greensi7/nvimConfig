@@ -7,6 +7,7 @@ return {
 			local cmp = require("cmp")
 			cmp.setup({
 				mapping = {
+					["<Enter>"] = cmp.mapping.confirm({ select = true }),
 					["<Tab>"] = cmp.mapping.confirm({ select = true }),
 					["<Down>"] = cmp.mapping.select_next_item(),
 					["<Up>"] = cmp.mapping.select_prev_item(),
