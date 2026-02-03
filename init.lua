@@ -14,6 +14,7 @@ vim.lsp.enable({
 	--"bashls"
 })
 
+vim.keymap.set("x", "p", [["_dP]])
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 
