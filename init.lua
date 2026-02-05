@@ -37,7 +37,7 @@ vim.keymap.set("n", "<leader>fm", builtin.man_pages, { desc = "Telescope man pag
 vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format, { desc = "Format Buffer" })
 
 local opts = { noremap = true, silent = true }
-vim.api.nvim_set_keymap("n", "<leader>;", ":nohlsearch<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>/", ":nohlsearch<CR>", { noremap = true, silent = true })
 
 vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
 	callback = function()
