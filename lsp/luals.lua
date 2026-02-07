@@ -7,10 +7,15 @@ return {
 			runtime = {
 				version = "LuaJIT",
 			},
-			signatureHelp = { enabled = true },
-			diagnostics = {
-				globals = {"vim"},
+			workspace = {
+				checkThirdParty = false,
+				library = {
+					vim.env.VIMRUNTIME,
+					"${3rd}/luv/library",
+				},
 			},
+			signatureHelp = { enabled = true },
+			diagnostics = {},
 		},
 	},
 }
