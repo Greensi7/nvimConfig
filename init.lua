@@ -1,6 +1,12 @@
 require("config.lazy")
 vim.o.winborder = "rounded"
 
+require("mason").setup()
+require("mason-lspconfig").setup({
+	ensure_installed = { "lua_ls", "gopls", "clangd", "basedpyright" },
+	automatic_installation = true,
+})
+
 vim.lsp.enable({
 	"luals",
 	"basedpyright",
@@ -36,7 +42,6 @@ vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live gr
 vim.keymap.set("n", "<leader>fm", builtin.man_pages, { desc = "Telescope man pages" })
 vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format, { desc = "Format Buffer" })
 
-local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap("n", "<leader>/", ":nohlsearch<CR>", { noremap = true, silent = true })
 
 vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
@@ -46,8 +51,10 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
 })
 
 vim.keymap.set("n", "K", function()
-	vim.lsp.buf.hover({ border = "rounded" })
+	vim.lsp.buf.hover()
 end, { noremap = true, silent = true })
+
+local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts) -- go to definition
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts) -- find references
@@ -56,4 +63,3 @@ vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts) -- go to implementat
 
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic message" })
 vim.keymap.set("n", "<leader>E", vim.diagnostic.setloclist, { desc = "Show list of errors" })
-
