@@ -7,16 +7,15 @@ return {
 			style = "storm",
 			transparent = false,
 			on_highlights = function(hl, c)
-				-- Make line numbers more vibrant
 				local cl = c.blue
 				hl.LineNr = { fg = cl } -- or try c.cyan, c.purple, c.magenta, etc.
 				hl.LineNrAbove = { fg = cl }
 				hl.LineNrBelow = { fg = cl }
+				--hl.BlinkCmpGhostText = { }
 
-				-- Keep current line number highlighted
 				hl.CursorLineNr = { fg = c.orange, bold = true }
 			end,
 		})
-		vim.cmd([[colorscheme tokyonight]])
+		vim.cmd([[colorscheme tokyonight-night]])
 	end,
 }
