@@ -1,14 +1,8 @@
 require("config.lazy")
-vim.o.winborder = "rounded"
-
 require("mason").setup()
-require("mason-lspconfig").setup({
-	ensure_installed = { "lua_ls", "gopls", "clangd", "basedpyright" },
-	automatic_installation = true,
-})
 
-vim.lsp.enable({
-	"luals",
+local lsp_list = {
+	"lua_ls",
 	"basedpyright",
 	"gopls",
 	"clangd",
@@ -18,9 +12,13 @@ vim.lsp.enable({
 	--"terraformls",
 	--"yamlls",
 	--"bashls"
+}
+require("mason-lspconfig").setup({
+	ensure_installed = lsp_list,
+	automatic_installation = true,
 })
+vim.lsp.enable(lsp_list)
 
-vim.keymap.set("x", "p", [["_dP]])
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 
@@ -29,12 +27,34 @@ vim.opt.expandtab = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
+vim.o.winborder = "rounded"
 
 vim.opt.clipboard = "unnamedplus"
 vim.g.mapleader = " "
+
+vim.keymap.set("n", "<leader>sl", function()
+	vim.lsp.enable(lsp_list, false)
+	vim.lsp.enable(lsp_list, true)
+	vim.notify("Lsp Servers Restarted", 1)
+end)
+
+vim.keymap.set("n", "<leader>ss", function()
+	vim.cmd("source $MYVIMRC")
+	vim.cmd("echo 'sourced' $MYVIMRC", 1)
+end)
+
+vim.keymap.set("n", "<leader>sc", function()
+	local buf_id = vim.api.nvim_win_get_buf(0)
+	local buf_name = vim.fn.bufname(buf_id)
+	vim.cmd("source " .. buf_name)
+	vim.notify("sourced " .. buf_name, 1)
+end)
+
+vim.keymap.set("x", "p", [["_dP]])
 vim.keymap.set("n", "<leader><leader>", "<cmd>b#<CR>", { desc = "Mvoe to the previous buffer" })
 
 local builtin = require("telescope.builtin")
+--vim.keymap.set("n", "<leader>fk", builtin, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<leader>ff", function()
 	builtin.find_files({ hidden = true })
 end, { desc = "Telescope find files" })

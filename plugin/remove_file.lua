@@ -10,6 +10,14 @@ vim.keymap.set("n", "<leader>rm", function()
 		return
 	end
 
-	vim.cmd("enew")
+	local current = vim.fn.bufnr("%")
+	local alternate = vim.fn.bufnr("#")
+
+	if alternate == -1 or alternate == current then
+        vim.cmd("enew")
+    else
+        vim.cmd("b#")
+	end
 	vim.cmd("!rm " .. old_path)
+	vim.cmd(":let @# = bufnr('%')")
 end, { desc = "Delete current file and move to empty buffer." })

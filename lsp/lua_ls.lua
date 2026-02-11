@@ -9,9 +9,10 @@ return {
 			},
 			workspace = {
 				checkThirdParty = false,
-				library = {
-					vim.env.VIMRUNTIME,
-				},
+				library = vim.api.nvim_get_runtime_file("", true),
+				--{
+				--	vim.env.VIMRUNTIME,
+				--},
 			},
 			signatureHelp = { enabled = true },
 			diagnostics = {},

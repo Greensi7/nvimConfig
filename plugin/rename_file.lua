@@ -12,7 +12,7 @@ vim.keymap.set("n", "<leader>rn", function()
 
 	vim.ui.input({
 		prompt = "New file name: ",
-		default = filename,
+		default = "",
 	}, function(input)
 		if not input or input == "" or input == filename then
 			return
@@ -34,6 +34,7 @@ vim.keymap.set("n", "<leader>rn", function()
 
 		vim.cmd("edit!")
 
+        vim.cmd(":let @# = bufnr('%')")
 		vim.notify("Renamed to: " .. input, vim.log.levels.INFO)
 	end)
 end, { desc = "Rename current file and keep buffer state" })

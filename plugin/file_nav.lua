@@ -16,3 +16,5 @@ local function open_term()
 	local _ = open_buffer()
 	vim.cmd.term()
 end
+
+
